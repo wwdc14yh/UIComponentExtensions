@@ -10,9 +10,9 @@ public extension Component where R.View == UIImageView {
             let minRatio = min(boundingSize.width / orgSize.width, boundingSize.height / orgSize.height)
             return CGSize(width: orgSize.width * minRatio, height: orgSize.height * minRatio)
         }
-        return constraint { constraint in
-            Constraint(tightSize: aspectFit(orgSize: constraint.minSize, to: targetSize))
-        }
-        .eraseToAnyComponentOfView()
+        let render = layout(Constraint(minSize: .constraintMinSize, maxSize: .constraintMaxSize))
+        let size = aspectFit(orgSize: render.size, to: targetSize)
+        return self.size(width: size.width, height: size.height)
+            .eraseToAnyComponentOfView()
     }
 }
